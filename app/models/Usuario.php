@@ -15,7 +15,7 @@ class Usuario {
     }
 
     //Metodo para listar todos os usuarios
-    public function listartable_name(){
+    public function listarUsuarios(){
         $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -24,12 +24,23 @@ class Usuario {
 
     //Metodo para cadastrar um usuario
     public function cadastrarUsuario($nome, $email, $senha){
-        $query = "INSERT INTO" . $this->table_name . "(nome, email, senha, criado_em, telefone_contato, telefone_celular, profissao)  VALUES (:nome, :email, :senha, NOW())";
+        $query = "INSERT INTO " . $this->table_name . " (nome, email, senha, criado_em, telefone_contato, telefone_celular, profissao) VALUES (:nome, :email, :senha, NOW(), :telefone_contato, :telefone_celular, :profissao)";
         $stmt = $this->conn->prepare($query);
+
+        //Bind Param
         $stmt->bindParam(":nome", $nome);
-        $stmt->bindParam(":nome", $nome);
+        $stmt->bindParam(":email", $email);
         $stmt->bindParam(":senha", password_hash($senha, PASSWORD_DEFAULT)); // Senha criptografada
-        return $stmt->execute();
+        $stmt->bindParam(":criado_em", date("Y-m-d H:i:s"));
+        $stmt->bindParam(":telefone_contato", $telefone_contato);
+        $stmt->bindParam(":telefone_celular", $telefone_celular);
+        $stmt->bindParam(":profissao", $profissao);
+        try {
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
     }
 }
 ?>
