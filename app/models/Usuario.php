@@ -24,7 +24,7 @@ class Usuario {
 
     //Metodo para cadastrar um usuario
     public function cadastrarUsuario($nome, $email, $senha){
-        $query = "INSERT INTO" . $this->table_name . "(nome, email, senha, criado_em) VALUES (:nome, :email, :senha, NOW())";
+        $query = "INSERT INTO" . $this->table_name . "(nome, email, senha, criado_em, telefone_contato, telefone_celular, profissao)  VALUES (:nome, :email, :senha, NOW())";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":nome", $nome);
         $stmt->bindParam(":nome", $nome);
