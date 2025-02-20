@@ -8,7 +8,16 @@ class Usuario {
     private $conn;
     private $table_name = "usuarios";
 
+    private $id;
+    private $nome;
+    private $email;
+    private $senha;
+    private $criado_em;
+    private $telefone_contato;
+    private $telefone_celular;
+    private $profissao;
 
+//Construtor para inicializar a conexão
     public function __construct() {
         $database = new Database();
         $this->conn =$database->getConnection();
@@ -24,7 +33,8 @@ class Usuario {
 
     //Metodo para cadastrar um usuario
     public function cadastrarUsuario($nome, $email, $senha){
-        $query = "INSERT INTO " . $this->table_name . " (nome, email, senha, criado_em, telefone_contato, telefone_celular, profissao) VALUES (:nome, :email, :senha, NOW(), :telefone_contato, :telefone_celular, :profissao)";
+        $query = "INSERT INTO " . $this->table_name . " (nome, email, senha, criado_em, telefone_contato, telefone_celular, profissao) 
+        VALUES (:nome, :email, :senha, NOW(), :telefone_contato, :telefone_celular, :profissao, NOW())";
         $stmt = $this->conn->prepare($query);
 
         //Bind Param

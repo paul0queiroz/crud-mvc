@@ -19,8 +19,8 @@ class controllerUsuario {
             $nome = $_POST["nome"];
             $email = $_POST["email"];
             $senha = $_POST["senha"];
-            $telefone_contato = $_POST["telefone_contato"];
-            $telefone_celular = $_POST["telefone_celular"];
+            $telefone_contato = $_POST["telefone_contato"] ?? null;
+            $telefone_celular = $_POST["telefone_celular"] ?? null;
             $profissao = $_POST["profissao"];
 
             if ($this->usuarioModel->cadastrarUsuario($nome, $email, $senha, $telefone_celular, $telefone_contato, $profissao)) {
